@@ -115,7 +115,7 @@ openresty_dir=/usr/local/openresty
 systemd=/lib/systemd/system
 # join system service
 service() {
-    ${openresty_dir}/nginx/sbin/nginx -t
+    ${openresty_dir}/nginx/sbin/nginx -t > /dev/null 2>&1
     if [ $? -ne 0 ]; then
         echo "nginx install error,please check conf or process"
         exit 1
