@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 echo "Shell 传递参数实例！"
 echo "\$0表示执行的文件名：$0"
@@ -29,16 +29,17 @@ for i in "$@";do
 echo $i
 done
 
-# echo "-----------------数组--------------------"
-# array_name=(
-# value0
-# value11
-# value222
-# 123456789
-# )
-# echo ${#array_name[@]}
-# echo ${#array_name[3]}
-# echo ${array_name[index+1]}
+echo "-----------------数组--------------------"
+array_name=(
+value0
+value11
+value222
+123456789
+)
+echo ${#array_name[@]}
+echo ${#array_name[*]}
+echo ${#array_name[3]}
+echo ${array_name[index+1]}
 
 # echo "------------------运算符-----------------"
 # expr length "hello"

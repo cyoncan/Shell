@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 local_dir=$(pwd)
 logfile="/home/cy/log/sftp.log"
