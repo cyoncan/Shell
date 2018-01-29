@@ -2,17 +2,20 @@
 
 [[ $EUID -ne 0 ]] && echo "Error: This script must be run as root!" && exit 1
 
-# user
+# mysql login user
 user="root"
-passwd="chen"
-
+passwd="password"
+# backup date time dir
 backup_date=$(date +%Y%m%d%H%M%S)
 temp_dir="/home/backup/mysql/temp"
 backup_dir="/home/backup/mysql"
-log_file="$backup_dir/backup.log"
-dump_file="$temp_dir/${backup_date}.sql"
-tar_file="$backup_dir/${backup_date}.tgz"
-dbname[0]=""
+log_file="${backup_dir}/backup.log"
+dump_file="${temp_dir}/${backup_date}.sql"
+tar_file="${backup_dir}/${backup_date}.tar.gz"
+# database,dbname[0]="" → all databases
+dbname[0]="mysql"
+dbname[1]="jumpserver"
+# dump sql foler
 backup[0]=""
 
 log(){
@@ -44,7 +47,7 @@ EOF
         else
             for db in ${dbname[*]}
             do
-                single_db="$temp_dir/$db_$backup_date.sql"
+                single_db="${temp_dir}/${db}_${backup_date}.sql"
                 mysqldump -u root -p"${passwd}" $db > "${single_db}" 2>/dev/null
                 if [ $? -ne 0 ]; then
                     log "MySQL databases name [${db}] backup failed"
@@ -59,7 +62,7 @@ EOF
 }
 
 start_backup() {
-    [ "${backup[*]}" == "" ] && echo "Error"
+    [ "${backup[*]}" == "" ] && echo "error"
     tar -zcPf ${tar_file} ${backup[*]}
     if [ $? -ne 0 ]; then
         log "Tar backup file failed"
@@ -67,11 +70,11 @@ start_backup() {
     fi
     log "Tar backup file Success"
 
-    for sql in `ls ${temp_dir}/*.sql`
-    do
-        log "Delete MySQL dump file: ${sql}"
-        rm -rf ${sql}
-    done
+    # for sql in `ls ${temp_dir}/*.sql`
+    # do
+    #     log "Delete MySQL dump file: ${sql}"
+    #     rm -rf ${sql}
+    # done
 }
 
 start_time=$(date +%s)
@@ -83,7 +86,7 @@ fi
 log "Backup progress start"
 mysql_backup
 start_backup
-log "Backup progress end!Success"
+log "Backup progress Success"
 
 end_time=$(date +%s)
 duration=$((end_time - start_time))
