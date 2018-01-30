@@ -46,6 +46,7 @@ EOF
             backup=(${backup[*]} ${dump_file})
         else
             for db in ${dbname[*]}
+            # for db in "${dbname[@]}"
             do
                 single_db="${temp_dir}/${db}_${backup_date}.sql"
                 mysqldump -u root -p"${passwd}" $db > "${single_db}" 2>/dev/null
