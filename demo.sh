@@ -16,9 +16,9 @@ echo "\$?显示命令退出状态: $?"
 echo "--------------read命令-------------------"
 read -p "随意输入若干字符：" name
 [ -z "${name}" ] && name="不输入内容默认输出该行"
-echo -e "$name"
-echo -e "china \c"
-echo -e "Hello"
+echo  "$name"
+echo  "china \c"
+echo  "Hello"
 
 echo "----------------\$*输出------------------"
 for i in "$*";do
@@ -36,9 +36,11 @@ value11
 value222
 123456789
 )
+echo ${array_name[@]}
+echo ${array_name[*]}
 echo ${#array_name[@]}
 echo ${#array_name[*]}
-echo ${#array_name[3]}
+echo ${array_name[0]}
 echo ${array_name[index+1]}
 
 # echo "------------------运算符-----------------"
